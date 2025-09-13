@@ -45,6 +45,19 @@ const server = http.createServer((request, response) => {
             }
         });
     }
+    else if (request.url === '/style.css') {
+        fs.readFile('style.css', 'utf8', (e, d) => {
+            if (e) {
+                console.log('error loading style.css');
+                response.statusCode = 500;
+                response.setHeader('Content-Type', 'text/plain');
+                response.end('Internal Server Error');
+            } else {
+                response.setHeader('Content-Type', 'text/css');
+                response.end(d);
+            }
+        });
+    }
     else {
         response.statusCode = 404;
         response.setHeader("Content-Type", "text/html");
